@@ -77,6 +77,9 @@ open class INSPhotoViewController: UIViewController, UIScrollViewDelegate {
         if let image = photo.image {
             self.scalingImageView.image = image
             self.activityIndicator.stopAnimating()
+            if photo.shouldLoadOriginalImage {
+                loadFullSizeImage()
+            }
         } else if let thumbnailImage = photo.thumbnailImage {
             self.scalingImageView.image = thumbnailImage
             self.activityIndicator.stopAnimating()

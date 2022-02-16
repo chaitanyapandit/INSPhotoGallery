@@ -27,7 +27,7 @@ import UIKit
     var image: UIImage? { get }
     var thumbnailImage: UIImage? { get }
     @objc optional var isDeletable: Bool { get }
-    
+    var shouldLoadOriginalImage: Bool { get set }
     func loadImageWithCompletionHandler(_ completion: @escaping (_ image: UIImage?, _ error: Error?) -> ())
     func loadThumbnailImageWithCompletionHandler(_ completion: @escaping (_ image: UIImage?, _ error: Error?) -> ())
     
@@ -35,6 +35,7 @@ import UIKit
 }
 
 @objc open class INSPhoto: NSObject, INSPhotoViewable {
+    @objc open var shouldLoadOriginalImage: Bool = false
     @objc open var image: UIImage?
     @objc open var thumbnailImage: UIImage?
     @objc open var isDeletable: Bool
