@@ -87,7 +87,6 @@ open class INSPhotoViewController: UIViewController, UIScrollViewDelegate {
         } else {
             loadThumbnailImage()
         }
-
     }
     
     open override func viewWillLayoutSubviews() {

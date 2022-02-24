@@ -11,6 +11,7 @@ import Kingfisher
 import INSPhotoGalleryFramework
 
 class CustomPhotoModel: NSObject, INSPhotoViewable {
+    var shouldLoadOriginalImage: Bool = false
     var image: UIImage?
     var thumbnailImage: UIImage?
     var isDeletable: Bool {

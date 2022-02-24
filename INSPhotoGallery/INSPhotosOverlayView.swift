@@ -123,14 +123,7 @@ open class INSPhotosOverlayView: UIView , INSPhotosOverlayViewable {
     
     open func populateWithPhoto(_ photo: INSPhotoViewable) {
         self.currentPhoto = photo
-
-        if let photosViewController = photosViewController {
-            if let index = photosViewController.dataSource.indexOfPhoto(photo) {
-                navigationItem.title = String(format:NSLocalizedString("%d of %d",comment:""), index+1, photosViewController.dataSource.numberOfPhotos)
-            }
-            captionLabel.attributedText = photo.attributedTitle
-        }
-        self.deleteToolbar.isHidden = photo.isDeletable != true
+        self.deleteToolbar.isHidden = true
     }
     
     @objc private func closeButtonTapped(_ sender: UIBarButtonItem) {
@@ -178,12 +171,10 @@ open class INSPhotosOverlayView: UIView , INSPhotosOverlayViewable {
         
         if let bundlePath = Bundle(for: type(of: self)).path(forResource: "INSPhotoGallery", ofType: "bundle") {
             let bundle = Bundle(path: bundlePath)
-            leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "INSPhotoGalleryClose", in: bundle, compatibleWith: nil), landscapeImagePhone: UIImage(named: "INSPhotoGalleryCloseLandscape", in: bundle, compatibleWith: nil), style: .plain, target: self, action: #selector(INSPhotosOverlayView.closeButtonTapped(_:)))
+            rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "INSPhotoGalleryClose", in: bundle, compatibleWith: nil), landscapeImagePhone: UIImage(named: "INSPhotoGalleryCloseLandscape", in: bundle, compatibleWith: nil), style: .plain, target: self, action: #selector(INSPhotosOverlayView.closeButtonTapped(_:)))
         } else {
-            leftBarButtonItem = UIBarButtonItem(title: "CLOSE".uppercased(), style: .plain, target: self, action: #selector(INSPhotosOverlayView.closeButtonTapped(_:)))
+            rightBarButtonItem = UIBarButtonItem(title: "CLOSE".uppercased(), style: .plain, target: self, action: #selector(INSPhotosOverlayView.closeButtonTapped(_:)))
         }
-        
-        rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(INSPhotosOverlayView.actionButtonTapped(_:)))
     }
     
  
@@ -193,12 +184,6 @@ open class INSPhotosOverlayView: UIView , INSPhotosOverlayViewable {
         captionLabel.translatesAutoresizingMaskIntoConstraints = false
         captionLabel.backgroundColor = UIColor.clear
         captionLabel.numberOfLines = 0
-        addSubview(captionLabel)
-        
-        let bottomConstraint = NSLayoutConstraint(item: self, attribute: .bottom, relatedBy: .equal, toItem: captionLabel, attribute: .bottom, multiplier: 1.0, constant: 8.0)
-        let leadingConstraint = NSLayoutConstraint(item: captionLabel!, attribute: .leading, relatedBy: .equal, toItem: self, attribute: .leading, multiplier: 1.0, constant: 8.0)
-        let trailingConstraint = NSLayoutConstraint(item: captionLabel!, attribute: .trailing, relatedBy: .equal, toItem: self, attribute: .trailing, multiplier: 1.0, constant: 8.0)
-        self.addConstraints([bottomConstraint,leadingConstraint,trailingConstraint])
     }
     
     private func setupShadows() {
@@ -228,15 +213,5 @@ open class INSPhotosOverlayView: UIView , INSPhotosOverlayViewable {
         deleteToolbar.setBackgroundImage(UIImage(), forToolbarPosition: .any, barMetrics: .default)
         deleteToolbar.setShadowImage(UIImage(), forToolbarPosition: .any)
         deleteToolbar.isTranslucent = true
-        let item = UIBarButtonItem(barButtonSystemItem: .trash, target: self, action: #selector(INSPhotosOverlayView.deleteButtonTapped(_:)))
-        deleteToolbar.setItems([item], animated: false)
-        addSubview(deleteToolbar)
-        
-        let bottomConstraint = NSLayoutConstraint(item: self, attribute: .bottom, relatedBy: .equal, toItem: deleteToolbar, attribute: .bottom, multiplier: 1.0, constant: 0.0)
-        let trailingConstraint = NSLayoutConstraint(item: self, attribute: .trailing, relatedBy: .equal, toItem: deleteToolbar, attribute: .trailing, multiplier: 1.0, constant: 0.0)
-        
-        let widthConstraint = NSLayoutConstraint(item: deleteToolbar!, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 65)
-        let heightConstraint = NSLayoutConstraint(item: deleteToolbar!, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 50)
-        self.addConstraints([bottomConstraint,trailingConstraint,widthConstraint, heightConstraint])
     }
 }
