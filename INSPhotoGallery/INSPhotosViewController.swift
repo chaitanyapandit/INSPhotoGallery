@@ -93,9 +93,9 @@ open class INSPhotosViewController: UIViewController, UIPageViewControllerDataSo
     }
     
     /*
-     * maximum zoom scale for the photos. Default is 1.0
+     * maximum zoom scale for the photos. Default is 5.0
      */
-    open var maximumZoomScale: CGFloat = 1.0 {
+    open var maximumZoomScale: CGFloat = 5.0 {
         didSet {
             self.currentPhotoViewController?.scalingImageView.maximumZoomScale = maximumZoomScale
         }
